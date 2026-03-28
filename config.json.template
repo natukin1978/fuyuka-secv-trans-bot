@@ -1,0 +1,27 @@
+{
+  "stream": {
+    "enableBots": [
+      "one_comme_to_fuyuka_adapter",
+      "showroom_chat_bot",
+      "openrec_chat_bot"
+    ]
+  },
+  "translate": {
+    "target": "ja",
+    "service": "deepL"
+  },
+  "deepL": {
+    "endpoint": "https://api-free.deepl.com/v2/translate",
+    "apiKey": [
+      "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX:fx"
+    ]
+  },
+  "translate_gas": {
+    "url": [
+      "https://script.google.com/macros/s/XXXXXXX_XXXXXX-XXXXX_XXXXX-XXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXX-XXXXXXXX/exec"
+    ]
+  },
+  "fuyukaApi": {
+    "baseUrl": "ws://127.0.0.1:38321"
+  }
+}
