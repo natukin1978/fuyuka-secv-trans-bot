@@ -9,20 +9,19 @@ import httpx
 import langdetect
 
 import global_value as g
+from config_helper import read_config
 from logging_setup import setup_app_logging
 
 g.app_name = "fuyuka_secv_trans_bot"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+g.config = read_config()
 
 # ロガーの設定
-setup_app_logging(log_file_path=f"{g.app_name}.log")
+setup_app_logging(g.config["logLevel"], log_file_path=f"{g.app_name}.log")
 logger = logging.getLogger(__name__)
 
-from config_helper import read_config
 from text_helper import read_text_set
 from websocket_helper import websocket_listen_forever
-
-g.config = read_config()
 
 g.set_exclude_id = read_text_set("exclude_id.txt")
 g.websocket_stream_live = None

@@ -2,7 +2,12 @@ import logging
 import sys
 
 
-def setup_app_logging(log_level=logging.WARNING, log_file_path="app.log"):
+def to_log_level(log_level_str: str):
+    log_level = getattr(logging, log_level_str, logging.INFO)
+    return log_level
+
+
+def setup_app_logging(log_level_str: str, log_file_path="app.log"):
     """
     アプリケーション全体のロギング設定を行います。
     ルートロガーにハンドラを設定するのが最も確実です。
@@ -15,6 +20,7 @@ def setup_app_logging(log_level=logging.WARNING, log_file_path="app.log"):
             root_logger.removeHandler(handler)
 
     # ロガーのレベル設定
+    log_level = to_log_level(log_level_str)
     root_logger.setLevel(log_level)
 
     # フォーマッター
