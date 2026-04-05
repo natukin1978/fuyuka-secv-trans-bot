@@ -19,6 +19,8 @@ async def websocket_listen_forever(
     reply_timeout = 60
     ping_timeout = 15
     sleep_time = 5
+    last_error: str | None = None
+
     while True:
         # outer loop restarted every time the connection fails
         try:
@@ -26,6 +28,8 @@ async def websocket_listen_forever(
                 if handle_set_websocket:
                     handle_set_websocket(ws)
                 print(f"接続成功しました。{websocket_uri}")
+                last_error = None
+
                 while True:
                     # listener loop
                     try:
@@ -42,11 +46,17 @@ async def websocket_listen_forever(
                             pong = await ws.ping()
                             await asyncio.wait_for(pong, timeout=ping_timeout)
                             continue
-                        except:
+                        except Exception:
                             await asyncio.sleep(sleep_time)
                             break
         except Exception as e:
-            logger.error(e)
+            current_error = str(e)
+
+            # 前回のエラーと異なる場合のみログを出力
+            if current_error != last_error:
+                logger.error(f"{e} {websocket_uri}")
+                last_error = current_error
+
             await asyncio.sleep(sleep_time)
             continue
         finally:
